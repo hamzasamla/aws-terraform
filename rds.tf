@@ -24,6 +24,7 @@ resource "aws_db_instance" "mysql" {
   skip_final_snapshot      = true
   publicly_accessible      = false
   multi_az                 = false
+   db_name = "demoMysql"
   backup_retention_period = 0 # Disable backups for demo purposes
   tags = {
     Name = "demo-mysql"
@@ -44,6 +45,7 @@ resource "aws_db_instance" "postgres" {
   skip_final_snapshot      = true
   publicly_accessible      = false
   multi_az                 = false
+  db_name = "demoPostgres"
   backup_retention_period = 0 # Disable backups for demo purposes
   tags = {
     Name = "demo-postgres"
