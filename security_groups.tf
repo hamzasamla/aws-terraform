@@ -30,6 +30,20 @@ resource "aws_security_group" "ec2_sg" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  ingress {
+  description = "Metabase UI"
+  from_port   = 3001
+  to_port     = 3001
+  protocol    = "tcp"
+  cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+  description = "HTTPS"
+  from_port   = 443
+  to_port     = 443
+  protocol    = "tcp"
+  cidr_blocks = ["0.0.0.0/0"]
+  }
   egress {
     from_port   = 0
     to_port     = 0
@@ -126,3 +140,12 @@ resource "aws_security_group_rule" "ec2_allow_from_alb_https" {
   source_security_group_id = aws_security_group.alb_sg.id
 }
 
+# Allow ALB to access Metabase port
+resource "aws_security_group_rule" "ec2_allow_from_alb_metabase" {
+  type                     = "ingress"
+  from_port                = 3001
+  to_port                  = 3001
+  protocol                 = "tcp"
+  security_group_id        = aws_security_group.ec2_sg.id
+  source_security_group_id = aws_security_group.alb_sg.id
+}

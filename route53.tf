@@ -13,3 +13,15 @@ resource "aws_route53_record" "app_alias" {
     evaluate_target_health = true
   }
 }
+
+resource "aws_route53_record" "bi_alias" {
+  zone_id = data.aws_route53_zone.primary.zone_id
+  name    = "metabase-bi"
+  type    = "A"
+
+  alias {
+    name                   = aws_lb.app_alb.dns_name
+    zone_id                = aws_lb.app_alb.zone_id
+    evaluate_target_health = true
+  }
+}
